@@ -4,13 +4,13 @@
 <h1 class = "text-center text-success mt-2"> ĐĂNG NHẬP QUẢN TRỊ </h1>
 
 
-{% if current_user.is_authenticate %}
+{% if current_user.is_authenticated %}
 <div class = "alert alert-info mt-2">
-  Chào <span class = "text-success">{{ current.user }}</span>
+  Chào <span class = "text-success">{{ current_user.username }}</span>
 </div>
 {% else %}
 
-{% if err _msg %}
+{% if err_msg %}
 <div class = "alert alert-danger">
   {{ err_msg }}
 </div>
@@ -18,7 +18,7 @@
 <form method = "post" action="/login">
   <div class="form-group">
     <label for="email">Tên Đăng Nhập:</label>
-    <input type="email" class="form-control" placeholder="Tên Đăng Nhập" id="username" name = "username">
+    <input type="text" class="form-control" placeholder="Tên Đăng Nhập" id="username" name = "username">
   </div>
   <div class="form-group">
     <label for="pwd">Password:</label>
@@ -27,4 +27,5 @@
 
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+{% endif %}
 {% endblock %}

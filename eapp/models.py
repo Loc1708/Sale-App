@@ -47,7 +47,7 @@ if __name__ == '__main__':
         db.create_all()
 
         import hashlib
-        u = User(name = "Doan Vu", username = "admin123", password = hashlib.md5('123456'.encode('utf-8')).hexdigest(), user_role = UserRoleEnum.ADMIN)
+        u = User(name = "Doan Vu", username = "admin", password = hashlib.md5('123456'.encode('utf-8')).hexdigest(), user_role = UserRoleEnum.ADMIN)
         db.session.add(u)
         db.session.commit()
         # c1 = Category(name='Mobile')

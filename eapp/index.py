@@ -6,6 +6,7 @@ from jinja2.nodes import args_as_const
 
 from eapp import app, dao,login
 from flask_login import login_user
+from eapp.admin import admin
 
 @app.route('/')
 def index():
@@ -16,24 +17,22 @@ def index():
     page_size = app.config['PAGE_SIZE']
 
 
-    return render_template('index.html', products=products,
-                           pages = math.ceil(dao.count_products()/page_size))
+    return render_template('login.html', err_msg='Đăng nhập thất bại!')
 
 @app.route('/login')
 def login_view():
     return render_template('login.html')
 
-@app.route('/login',methods = ['post'])
-def login_progress():
+@app.route('/login', methods=['post'])
+def login_process():
     username = request.form.get('username')
     password = request.form.get('password')
-    u = dao.authenticate(username=username,password=password)
+
+    u = dao.authenticate(username=username, password=password)
     if u:
-        login_user(user = u)
+        login_user(user=u)
 
-        return redirect('/admin')
-    return render_template('admin/index.html', err_msg = 'Login that bai do sai username hoawc mat khau!!')
-
+    return redirect('/admin')
 @app.route('/register')
 def register_view():
     return render_template('register.html')
