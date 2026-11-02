@@ -1,7 +1,7 @@
-from string import hexdigits
+import cloudinary.uploader
 
 from eapp.models import Category, Product, User
-from eapp import  app
+from eapp import  app,db
 import hashlib
 def load_categories():
     return Category.query.all()
@@ -28,3 +28,17 @@ def authenticate(username, password):
     return User.query.filter(User.username.__eq__(username.strip()),User.password.__eq__(password)).first()
 def get_user_by_id(user_id):
     return User.query.get(user_id)
+def create_user(name, username, password,avatar = None):
+    password = hashlib.md5(password.strip().encode('utf-8')).hexdigest()
+
+    u = User(name = name.strip(), username = username.strip(), password = password, avatar = avatar)
+    if avatar:
+        res = cloudinary.uploader.upload(avatar)
+
+
+
+
+        print(res)
+        u.avatar = res.get('secure_url')
+    db.session.add(u)
+    db.session.commit()
